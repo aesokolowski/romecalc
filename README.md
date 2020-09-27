@@ -6,4 +6,8 @@ compile (GNU):
 g++ src/*.cpp
 
 run:
-./a.out
+./a.out [argument]
+
+tests:
+g++ test/*.cpp src/utilities.cpp -o testme
+./testme [string to test]
