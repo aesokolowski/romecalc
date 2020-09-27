@@ -57,8 +57,8 @@ void initial(int argc, char **argv)
         case 2:
             std::cout << "Number of character in input: "
                       << user_num.get_count() << '\n' << "Is input made up "
-                      << "of only digits?: " << (is_numeric(argv[1]) ? "true"
-                      : "false") << ".\n" << std::endl;
+                      << "of only digits?: " << (is_numeric(user_num.get_uns())
+                      ? "true" : "false") << ".\n" << std::endl;
             break;
         default:
             std::cout << TOO_MANY_ARGS << std::endl;
