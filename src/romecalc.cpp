@@ -2,7 +2,7 @@
 
 int main(int argc, char **argv)
 {
-  initial(argc, argv);
+    initial(argc, argv);
 
-  return 0;
+    return 0;
 }

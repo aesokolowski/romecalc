@@ -1,15 +1,10 @@
 #include "../include/menu.h"
 #include "../include/UserNum.h"
+#include "../include/utilities.h"
 #include <iostream>
 
 const char *MSG_0_ARGS = "Please provide an argument.\n";
 const char *TOO_MANY_ARGS = "Too many arguments... for now...\n";
-
-/*  changes: I honestly don't think I'm going to need to go out of this scope,
-    so I can probably stick user_vector on the stack (and rename it to
-    user_num) since there's no main loop or anything... more importantly --
-    the scope should probably also be limited to the case blocks
-*/
 
 /*  eventual scheme:
     0 arg provided:
@@ -49,19 +44,25 @@ const char *TOO_MANY_ARGS = "Too many arguments... for now...\n";
 
 void initial(int argc, char **argv)
 {
-  UserNum *user_vector = new UserNum(*(argv + 1));
+    // this will need to be replaced by an argument parser when I move on
+    // to more than one argument and start adding switches but for now,
+    // let's just assume the first argument is either Arabic decimal or
+    // Roman numeral to be converted to the other
+    UserNum user_num(argv[1]);
 
-  switch (argc) {
-    case 1:
-      std::cout << MSG_0_ARGS << std::endl;
-      break;
-    case 2:
-      std::cout << "You entered: " << *(argv + 1) << ".\n";
-      break;
-    default:
-      std::cout << TOO_MANY_ARGS << std::endl;
-  }
+    switch (argc) {
+        case 1:
+            std::cout << MSG_0_ARGS << std::endl;
+            break;
+        case 2:
+            std::cout << "Number of character in input: "
+                      << user_num.get_count() << '\n' << "Is input made up "
+                      << "of only digits?: " << (is_numeric(argv[1]) ? "true"
+                      : "false") << ".\n" << std::endl;
+            break;
+        default:
+            std::cout << TOO_MANY_ARGS << std::endl;
+    }
 
-  delete user_vector;
-  return;
+    return;
 }

@@ -9,7 +9,8 @@ class UserNum
         std::vector<char> user_num;
     public:
         UserNum(const char *);
-        inline std::vector<char> get_unv() { return user_num; }
+        inline std::vector<char> get_unv() { return this->user_num; }
+        inline size_t get_count() { return this->user_num.size(); }
 };
 
 #endif //USERNUM
