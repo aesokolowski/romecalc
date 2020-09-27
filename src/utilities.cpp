@@ -7,8 +7,8 @@ bool is_numeric(const char *str)
    char next = *str;
 
    while (next != '\0') {
-     if (next < 48 || next > 57) return false;
-     else                next = *(++i + str);
+       if (next < 48 || next > 57) return false;
+       else                        next = *(++i + str);
    }
 
    return true;
