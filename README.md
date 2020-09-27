@@ -10,4 +10,5 @@ run:
 
 tests:
 g++ test/*.cpp src/utilities.cpp -o testme
+
 ./testme [string to test]
