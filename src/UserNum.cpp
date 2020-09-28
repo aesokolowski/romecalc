@@ -1,8 +1,8 @@
 #include "../include/UserNum.h"
 #include <iostream>
 
-//  I want this constructor to push each character of str onto the
-//  vector<char>, and I guess that's about it
+//  saves string as c-string and vector of chars so I can easily access either
+//  type whether I'm parsing or using for arithmatic
 UserNum::UserNum(const char *str)
 {
     if (str) {

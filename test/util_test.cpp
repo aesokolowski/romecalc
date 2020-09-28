@@ -10,6 +10,8 @@ int main(int argc, char **argv)
 
     std::cout << "Test 1: is_numeric(const char *): " << is_numeric(argv[1])
          << std::endl;
+    std::cout << "Test2: is_roman(const char *): " << is_roman(argv[1])
+         << std::endl;
 
     return 0;
 }
