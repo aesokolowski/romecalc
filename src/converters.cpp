@@ -46,6 +46,15 @@ char * dec_to_rn(UserNum un)
                 strcpy(unit2, "L");
                 strcpy(unit3, "C");
                 break;
+            case 2:
+                strcpy(unit1, "C");
+                strcpy(unit2, "D");
+                strcpy(unit3, "M");
+                break;
+            case 3:
+                strcpy(unit1, "M");
+                strcpy(unit2, "?");
+                strcpy(unit3, "!");
             default:
                 /*  do nothing for now TODO error message */
                 break;
