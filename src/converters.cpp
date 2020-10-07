@@ -6,6 +6,17 @@
 
 char * dec_to_rn(UserNum un)
 {
+    const char *EMPTY         = "",
+	       *AYE           = "I",
+	       *VEE           = "V",
+	       *EX            = "X",
+	       *EL            = "L",
+	       *CEE           = "C",
+	       *DEE           = "D",
+               *EM            = "M",
+	       *UNKNOWN_5000  = "?",
+	       *UNKNOWN_10000 = "!";
+
     char *last = new char[128];
     char str[128];
     char unit1[2];
@@ -16,11 +27,11 @@ char * dec_to_rn(UserNum un)
     int digit = 0;
     std::vector<char> uv = un.get_unv();
 
-    strcpy(str, "");
-    strcpy(last, "");
-    strcpy(unit1, "I");
-    strcpy(unit2, "V");
-    strcpy(unit3, "X");
+    strcpy(str, EMPTY);
+    strcpy(last, EMPTY);
+    strcpy(unit1, AYE);
+    strcpy(unit2, VEE);
+    strcpy(unit3, EX);
  
     //  remember to fill out case statement for each digit 0 - 9
     //  0 -- do
@@ -42,19 +53,19 @@ char * dec_to_rn(UserNum un)
                 /*  do nothing */
                 break;
             case 1:
-                strcpy(unit1, "X");
-                strcpy(unit2, "L");
-                strcpy(unit3, "C");
+                strcpy(unit1, EX);
+                strcpy(unit2, EL);
+                strcpy(unit3, CEE);
                 break;
             case 2:
-                strcpy(unit1, "C");
-                strcpy(unit2, "D");
-                strcpy(unit3, "M");
+                strcpy(unit1, CEE);
+                strcpy(unit2, DEE);
+                strcpy(unit3, EM);
                 break;
             case 3:
-                strcpy(unit1, "M");
-                strcpy(unit2, "?");
-                strcpy(unit3, "!");
+                strcpy(unit1, EM);
+                strcpy(unit2, UNKNOWN_5000);
+                strcpy(unit3, UNKNOWN_10000);
             default:
                 /*  do nothing for now TODO error message */
                 break;
@@ -107,7 +118,7 @@ char * dec_to_rn(UserNum un)
 
         strcat(str, last);
         strcpy(last, str);
-        strcpy(str, "");
+        strcpy(str, EMPTY);
     }
 
     return last;
