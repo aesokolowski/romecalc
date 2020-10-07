@@ -6,7 +6,8 @@
 
 char * dec_to_rn(UserNum un)
 {
-    char *str = new char[128];
+    char *last = new char[128];
+    char str[128];
     char unit1[2];
     char unit2[2];
     char unit3[2];
@@ -16,6 +17,7 @@ char * dec_to_rn(UserNum un)
     std::vector<char> uv = un.get_unv();
 
     strcpy(str, "");
+    strcpy(last, "");
     strcpy(unit1, "I");
     strcpy(unit2, "V");
     strcpy(unit3, "X");
@@ -93,7 +95,11 @@ char * dec_to_rn(UserNum un)
                   day   */
                 strcat(str, "This option is not yet completed.");
         }
+
+        strcat(str, last);
+        strcpy(last, str);
+        strcpy(str, "");
     }
 
-    return str;
+    return last;
 }
