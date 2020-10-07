@@ -12,7 +12,7 @@ modularize the the code for future changes
 
 future:
 
-support different bases (especially for Arabic numerals), expand for list of arguments, Roman fractions
+reverse, support different bases (especially for Arabic numerals), expand for list of arguments, Roman fractions
 
 
 doesn't even do as advertised yet -- works the easy way, 0 - 3999 base-10 Arabic numerals to Roman numerals
