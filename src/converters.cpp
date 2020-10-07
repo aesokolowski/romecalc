@@ -35,6 +35,19 @@ char * dec_to_rn(UserNum un)
     //  up until 4 thousand, at least for now
     for (int i = size - 1; i >= 0; i--) {  // maybe should go backwards?
         //  switch statement to change characters  TODO *******
+        switch (digit++) {
+            case 0:
+                /*  do nothing */
+                break;
+            case 1:
+                strcpy(unit1, "X");
+                strcpy(unit2, "L");
+                strcpy(unit3, "C");
+                break;
+            default:
+                /*  do nothing for now TODO error message */
+                break;
+        }
 
         //  switch to distribute characters
         switch (uv[i]) {
@@ -80,8 +93,6 @@ char * dec_to_rn(UserNum un)
                   day   */
                 strcat(str, "This option is not yet completed.");
         }
-
-        //digit++;   put back in when adding 10s place
     }
 
     return str;
