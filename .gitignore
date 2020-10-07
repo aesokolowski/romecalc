@@ -1,6 +1,9 @@
 a.out
+a.exe
 testme
+testme.exe
 rocal
+rocal.exe
 *.swp
 *.swo
 .git
