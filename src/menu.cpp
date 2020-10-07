@@ -74,7 +74,9 @@ void initial(int argc, char **argv)
     }
 
     if (solution) {
-        delete[] solution;
+        delete [] solution;
+        solution = NULL;
     }
+
     return;
 }

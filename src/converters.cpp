@@ -9,6 +9,8 @@ char * dec_to_rn(UserNum un)
     char *str = new char[128];
     char unit1[2];
     char unit2[2];
+    char unit3[2];
+    
     int size = un.get_count();
     int digit = 0;
     std::vector<char> uv = un.get_unv();
@@ -16,6 +18,7 @@ char * dec_to_rn(UserNum un)
     strcpy(str, "");
     strcpy(unit1, "I");
     strcpy(unit2, "V");
+    strcpy(unit3, "X");
  
     //  remember to fill out case statement for each digit 0 - 9
     //  0 -- do
@@ -47,10 +50,35 @@ char * dec_to_rn(UserNum un)
             case 0x31:   // 1
                 strcat(str, unit1);
                 break;
+            case 0x34:   // 4
+                strcat(str, unit1);
+                /**   FALLTHROUGH  **/
+            case 0x35:   // 5
+                strcat(str, unit2);
+                break;
+            case 0x36:   // 6
+                strcat(str, unit2);
+                strcat(str, unit1);
+                break;
+            case 0x37:   // 7
+                strcat(str, unit2);
+                strcat(str, unit1);
+                strcat(str, unit1);
+                break;
+            case 0x38:   // 8
+                strcat(str, unit2);
+                strcat(str, unit1);
+                strcat(str, unit1);
+                strcat(str, unit1);
+                break;
+            case 0x39:   // 9
+                strcat(str, unit1);
+                strcat(str, unit3);
+                break;
             default:
               /*  throw exception? might just print a message and call it a
                   day   */
-                strcat(str, "This option is not yet completed.");;
+                strcat(str, "This option is not yet completed.");
         }
 
         //digit++;   put back in when adding 10s place
