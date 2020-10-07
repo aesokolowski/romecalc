@@ -1,4 +1,5 @@
 #include "../include/UserNum.h"
+#include <cstring>
 #include <iostream>
 
 //  saves string as c-string and vector of chars so I can easily access either
