@@ -9,6 +9,6 @@
 bool is_numeric(UserNum);
 bool is_roman(UserNum);
 bool is_valid_roman(UserNum);
-bool m_check(char, size_t);
+bool m_check(char, size_t *);
 
 #endif //UTILITIES

@@ -74,20 +74,27 @@ bool is_valid_roman(UserNum un)
 
     for (size_t i = 0; i < len; i++) {
         if (i > 0) {
+	    char el = uv[i - 1];
+
             switch (uv[i]) {
-	        case 0x4d:  //M
-	        case 0x6d:  //m
+	        case 0x4d:  // M
+	        case 0x6d:  // m
 	            // don't like nest switch statements, so putting a function
 		    // call here
-                    if (m_check(uv[i - 1], in_a_row)) {
+                    if (m_check(uv[i - 1], &in_a_row)) {
                         if (in_a_row == 0) in_a_row = 2;
 		        else in_a_row++;
 		    } else {
                         return false;
 		    }
-		break;
+
+		    break;
+		case 0x44:  // D
+		case 0x64:  // d
+		    if (!(el == 0x4d || el == 0x6d)) return false;
+		    break;
 		default:
-		    in_a_row = 0;
+		    return false;
 	    }
 	}
     }
@@ -95,12 +102,20 @@ bool is_valid_roman(UserNum un)
     return true;
 }
 
-bool m_check(char ch, size_t iar)
+bool m_check(char ch, size_t *iar)
 {
+    //std::cout << "ch: " << ch << "\n" << "*iar" << *iar << "\n";
     switch (ch) {
-        case 0x4d:  //M
-        case 0x6d:  //m
-	    if (iar >= 3) return false;
+        case 0x4d:  // M
+        case 0x6d:  // m
+	    if (*iar >= 3) return false;
+	    break;
+	case 0x43:  // C
+	case 0x63:  // c
+	    *iar = 2; // more than one M cannot follow an M
+	    break;
+	default:
+	    return false; // nothing other than M or C can precede M
     }
 
     return true;
