@@ -72,7 +72,7 @@ bool is_valid_roman(UserNum un)
 	   in_a_row = 0;
     std::vector<char> uv = un.get_unv();
 
-    for (size_t i = 0; ii < len; i++) {
+    for (size_t i = 0; i < len; i++) {
         if (i > 0) {
 	    char el = uv[i - 1];
 
