@@ -72,7 +72,7 @@ bool is_valid_roman(UserNum un)
 	   in_a_row = 0;
     std::vector<char> uv = un.get_unv();
 
-    for (size_t i = 0; i < len; i++) {
+    for (size_t i = 0; ii < len; i++) {
         if (i > 0) {
 	    char el = uv[i - 1];
 
@@ -112,7 +112,7 @@ bool m_check(char ch, size_t *iar)
 	    break;
 	case 0x43:  // C
 	case 0x63:  // c
-	    *iar = 2; // more than one M cannot follow an M
+	    *iar = 2; // more than one M cannot follow an C
 	    break;
 	default:
 	    return false; // nothing other than M or C can precede M
