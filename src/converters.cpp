@@ -6,6 +6,8 @@
 
 char * dec_to_rn(UserNum un)
 {
+    const size_t MAX_BUFF = 128,
+	         SMALL_BUFF = 2;
     const char *EMPTY         = "",
 	       *AYE           = "I",
 	       *VEE           = "V",
@@ -17,11 +19,11 @@ char * dec_to_rn(UserNum un)
 	       *UNKNOWN_5000  = "?",
 	       *UNKNOWN_10000 = "!";
 
-    char *last = new char[128];
-    char str[128];
-    char unit1[2];
-    char unit2[2];
-    char unit3[2];
+    char *last = new char[MAX_BUFF];
+    char str[MAX_BUFF];
+    char unit1[SMALL_BUFF];
+    char unit2[SMALL_BUFF];
+    char unit3[SMALL_BUFF];
     
     int size = un.get_count();
     int digit = 0;

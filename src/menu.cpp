@@ -43,6 +43,7 @@
 
 void initial(int argc, char **argv)
 {
+    const size_t MAX_BUFF = 128;
     const char *MSG_0_ARGS = "Please provide an argument.",
 	       *INVALID_INPUT = "Input must be a decimal number in Arabic numbers.",
                *TOO_MANY_ARGS = "Too many arguments... for now...";
@@ -57,20 +58,20 @@ void initial(int argc, char **argv)
 
     switch (argc) {
         case 1:
-            solution = new char[128];
+            solution = new char[MAX_BUFF];
             strcat(solution, MSG_0_ARGS);
             break;
         case 2:
 	    if (is_numeric(user_num)) {
                 solution = dec_to_rn(user_num);
 	    } else {
-	        solution = new char[128];
+	        solution = new char[MAX_BUFF];
                 strcat(solution, INVALID_INPUT);
 	    }
             
             break;
         default:
-            solution = new char[128];
+            solution = new char[MAX_BUFF];
 	    strcat(solution, TOO_MANY_ARGS);
     }
 
