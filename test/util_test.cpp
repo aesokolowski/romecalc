@@ -20,6 +20,8 @@ int main(int argc, char **argv)
          << std::endl;
     std::cout << "Test2: is_roman(UserNum): " << is_roman(user_num)
          << std::endl;
+    std::cout << "Test3: is_valid_roman(UserNum): " << is_valid_roman(user_num)
+	 << std::endl;
 
     return 0;
 }

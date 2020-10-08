@@ -1,6 +1,7 @@
 #include "../include/UserNum.h"
 #include "../include/utilities.h"
 #include <cstring>
+#include <iostream>  // debug
 #include <vector>
 
 //  may want to change this to return an int (0, 1, -1) with -1 meaning a
@@ -56,6 +57,50 @@ bool is_roman(UserNum un)
             default:
                 return false;
         }
+    }
+
+    return true;
+}
+
+//   determine whether or not a Roman numeral is valid, scanning from
+//   left to right
+//   this function assumes is_roman has already returned true, since all
+//   1-character strings should pass
+bool is_valid_roman(UserNum un)
+{
+    size_t len = un.get_count(),
+	   in_a_row = 0;
+    std::vector<char> uv = un.get_unv();
+
+    for (size_t i = 0; i < len; i++) {
+        if (i > 0) {
+            switch (uv[i]) {
+	        case 0x4d:  //M
+	        case 0x6d:  //m
+	            // don't like nest switch statements, so putting a function
+		    // call here
+                    if (m_check(uv[i - 1], in_a_row)) {
+                        if (in_a_row == 0) in_a_row = 2;
+		        else in_a_row++;
+		    } else {
+                        return false;
+		    }
+		break;
+		default:
+		    in_a_row = 0;
+	    }
+	}
+    }
+
+    return true;
+}
+
+bool m_check(char ch, size_t iar)
+{
+    switch (ch) {
+        case 0x4d:  //M
+        case 0x6d:  //m
+	    if (iar >= 3) return false;
     }
 
     return true;
