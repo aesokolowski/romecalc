@@ -1,7 +1,6 @@
 #include "../include/converters.h"
 #include "../include/UserNum.h"
 #include <cstring>
-#include <iostream>
 #include <vector>
 
 char * dec_to_rn(UserNum un)
