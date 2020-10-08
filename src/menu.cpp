@@ -59,20 +59,21 @@ void initial(int argc, char **argv)
     switch (argc) {
         case 1:
             solution = new char[MAX_BUFF];
-            strcat(solution, MSG_0_ARGS);
+            strcpy(solution, MSG_0_ARGS);
             break;
         case 2:
 	    if (is_numeric(user_num)) {
                 solution = dec_to_rn(user_num);
 	    } else {
 	        solution = new char[MAX_BUFF];
-                strcat(solution, INVALID_INPUT);
+                strcpy(solution, INVALID_INPUT);
 	    }
             
             break;
         default:
             solution = new char[MAX_BUFF];
-	    strcat(solution, TOO_MANY_ARGS);
+	    strcpy(solution, TOO_MANY_ARGS);
+	    break;
     }
 
     if (solution) {

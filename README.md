@@ -4,10 +4,9 @@ compiles, runs as expected on both my Mac and Windows 10 machines... for now...
 
 targets:
 
-1. clean up current code (save literals other than 1, 0 -1 in constants kind of stuff)
-2. errors for inputting an argument that is not implemented yet (so anything other than a decimal integer between 0 - 3999 inclusive)
-3. a function to determine if a string containing valid Roman numeral characters has them in the correct order (I also think the max is 15 characters long for 3888) and another function to actually parse it, I feel making multiple passes helps
-modularize the the code for future changes
+1. errors for inputting an argument that is not implemented yet (so anything other than a decimal integer between 0 - 3999 inclusive)
+2. a function to determine if a string containing valid Roman numeral characters has them in the correct order (I also think the max is 15 characters long for 3888) and another function to actually parse it, I feel making multiple passes helps modularize the the code for future changes
+3. 
 4. help menu
 
 future:
@@ -15,7 +14,7 @@ future:
 support different bases (especially for Arabic numerals), expand for list of arguments, Roman fractions
 
 
-doesn't even do as advertised yet -- works the easy way, 0 - 3999 base-10 Arabic numerals to Roman numerals
+doesn't even do as advertised yet -- works the easy way, 0 - 3999 base-10 Arabic numerals to Roman numerals but even that can't be piped or inserted (Mac) because the file/program will just take "Too many arguments."
 
 compile (GNU):
 
@@ -31,17 +30,17 @@ g++ test/*.cpp src/utilities.cpp src/UserNum -o testme
 
 ./testme [string to test]
 
-style note:
+Style Notes:
 
-* spacing -- for simplicity's sake, I prefer to use uniform spacing regardless of an *'s purpose, I attach it to the right-hand-side
+1. star spacing -- for simplicity's sake, I prefer to use uniform spacing regardless of an *'s purpose, I attach it to the right-hand-side
 
 return pointer:
 
-myObject *myFunction(myType myArgument) {}
+myType *myFunction(myType myArgument) {}
 
 passed pointer:
 
-myObject myFunction(myType *myArgument) {}
+myType myFunction(myType *myArgument) {}
 
 declare pointer:
 
@@ -49,6 +48,7 @@ myType *myPointer;
 
 dereference pointer:
 
-myType *myPointer;
+*myPointer = myValue;
+myVariable = *myPointer
 
-*myPointer = 1;
+2. don't really see a reason to use std::string for this program, the only thing I really dislike about cstrings is that long literals have no choice but to spill over to the next line but I try to stick them all in consts in one specific section anyway to not uglify the whole file.
