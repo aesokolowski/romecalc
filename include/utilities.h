@@ -7,6 +7,6 @@
 // not if they're in standard format (as we recognize in 21st century)
 
 bool is_numeric(UserNum);
-bool is_roman(const char *);
+bool is_roman(UserNum);
 
 #endif //UTILITIES

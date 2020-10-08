@@ -28,13 +28,15 @@ bool is_numeric(UserNum un)
 //  ASCII (hex):    43   49     4D       58
 //                    44    4C      56
 //               add hex 20 for lowercase
-bool is_roman(const char *str)
+bool is_roman(UserNum un)
 {
-    size_t i = 0;
-    char next = *str;
+    size_t len = un.get_count();
+    std::vector<char> uv = un.get_unv();
 
-    while (next != '\0') {
-        switch (next) {
+    for (size_t i = 0; i < len; i++) {
+        char el = uv[i];
+
+        switch (el) {
             case 0x43:
             case 0x44:
             case 0x49:
@@ -49,7 +51,7 @@ bool is_roman(const char *str)
             case 0x6d:
             case 0x76:
             case 0x78:
-                next = *(++i + str);
+                /* do nothing */
                 break;
             default:
                 return false;
