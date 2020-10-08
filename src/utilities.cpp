@@ -112,7 +112,7 @@ bool m_check(char ch, size_t *iar)
 	    break;
 	case 0x43:  // C
 	case 0x63:  // c
-	    *iar = 2; // more than one M cannot follow an C
+	    *iar = 2; // more than one M cannot follow a C
 	    break;
 	default:
 	    return false; // nothing other than M or C can precede M
