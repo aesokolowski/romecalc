@@ -1,4 +1,5 @@
 #include "../include/converters.h"
+#include "../include/menu.h"
 #include "../include/UserNum.h"
 #include "../include/utilities.h"
 #include <cstring>
