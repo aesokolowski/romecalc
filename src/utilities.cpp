@@ -1,16 +1,19 @@
+#include "../include/UserNum.h"
 #include "../include/utilities.h"
 #include <cstring>
+#include <vector>
 
 //  may want to change this to return an int (0, 1, -1) with -1 meaning a
 //  string is numeric, but contains one (and only one) decimal point
-bool is_numeric(const char *str)
+bool is_numeric(UserNum un)
 {
-    size_t i = 0;
-    char next = *str;
+    size_t len = un.get_count();
+    std::vector<char> uv = un.get_unv();
 
-    while (next != '\0') {
-        if (next < 0x30 || next > 0x39) return false;
-        else                            next = *(++i + str);
+    for (size_t i = 0; i < len; i++) {
+	char el = uv[i];
+
+        if (el < 0x30 || el > 0x39) return false;
     }
 
     return true;

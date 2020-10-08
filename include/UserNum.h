@@ -6,7 +6,7 @@
 class UserNum
 {
     private:
-        char user_nums[128];
+        char user_nums[128];  // I'm starting to think I'm not going to need this
         std::vector<char> user_numv;
     public:
         UserNum(const char *);

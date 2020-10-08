@@ -58,6 +58,8 @@ void initial(int argc, char **argv)
             std::cout << MSG_0_ARGS << std::endl;
             break;
         case 2:
+	    //  want to check if numeric here, but currently is_numeric takes a
+	    //  string, I want to change that to take the user_num object
             solution = dec_to_rn(user_num);
             
             /**  DEBUG
