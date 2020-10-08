@@ -23,10 +23,10 @@ g++ src/*.cpp -o rocal
 
 run:
 
-./rocal [argument]
+./rocal [base-10 Arabic integer]
 
 tests:
 
-g++ test/*.cpp src/utilities.cpp -o testme
+g++ test/*.cpp src/utilities.cpp src/UserNum -o testme
 
 ./testme [string to test]
