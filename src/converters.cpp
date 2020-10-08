@@ -3,7 +3,7 @@
 #include <cstring>
 #include <vector>
 
-char * dec_to_rn(UserNum un)
+char *dec_to_rn(UserNum un)
 {
     const size_t MAX_BUFF = 128,
 	         SMALL_BUFF = 2;

@@ -30,3 +30,17 @@ tests:
 g++ test/*.cpp src/utilities.cpp src/UserNum -o testme
 
 ./testme [string to test]
+
+style note:
+
+* spacing -- for simplicity's sake, I prefer to use uniform spacing regardless of an *'s purpose, I attach it to the right-hand-side
+
+return pointer:
+myObject *myFunction(myType myArgument) {}
+passed pointer:
+myObject myFunction(myType *myArgument) {}
+declare pointer:
+myType *myPointer;
+dereference pointer:
+myType *myPointer;
+*myPointer = 1;
