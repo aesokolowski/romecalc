@@ -2,6 +2,7 @@
 #include "../include/menu.h"
 #include "../include/UserNum.h"
 #include "../include/utilities.h"
+#include <cstring>
 #include <iostream>
 
 /*  eventual scheme:
@@ -42,8 +43,9 @@
 
 void initial(int argc, char **argv)
 {
-    const char *MSG_0_ARGS = "Please provide an argument.\n";
-    const char *TOO_MANY_ARGS = "Too many arguments... for now...\n";
+    const char *MSG_0_ARGS = "Please provide an argument.",
+	       *INVALID_INPUT = "Input must be a decimal number in Arabic numbers.",
+               *TOO_MANY_ARGS = "Too many arguments... for now...";
 
 
     // this will need to be replaced by an argument parser when I move on
@@ -55,27 +57,25 @@ void initial(int argc, char **argv)
 
     switch (argc) {
         case 1:
-            std::cout << MSG_0_ARGS << std::endl;
+            solution = new char[128];
+            strcat(solution, MSG_0_ARGS);
             break;
         case 2:
-	    //  want to check if numeric here, but currently is_numeric takes a
-	    //  string, I want to change that to take the user_num object
-            solution = dec_to_rn(user_num);
+	    if (is_numeric(user_num)) {
+                solution = dec_to_rn(user_num);
+	    } else {
+	        solution = new char[128];
+                strcat(solution, INVALID_INPUT);
+	    }
             
-            /**  DEBUG
-            std::cout << "Number of character in input: "
-                      << user_num.get_count() << '\n' << "Is input made up "
-                      << "of only digits?: " << (is_numeric(user_num.get_uns())
-                      ? "true" : "false") << ".\n" << std::endl;
-            */
-
-            std::cout << solution << std::endl;
             break;
         default:
-            std::cout << TOO_MANY_ARGS << std::endl;
+            solution = new char[128];
+	    strcat(solution, TOO_MANY_ARGS);
     }
 
     if (solution) {
+        std::cout << solution << std::endl;
         delete [] solution;
         solution = NULL;
     }
