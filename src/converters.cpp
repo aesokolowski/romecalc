@@ -6,7 +6,8 @@
 char *dec_to_rn(UserNum un)
 {
     const size_t MAX_BUFF = 128,
-	         SMALL_BUFF = 2;
+	         SMALL_BUFF = 2,
+		 MAX_CAT = 63;
     const char *EMPTY         = "",
 	       *AYE           = "I",
 	       *VEE           = "V",
@@ -28,11 +29,11 @@ char *dec_to_rn(UserNum un)
     int digit = 0;
     std::vector<char> uv = un.get_unv();
 
-    strcpy(str, EMPTY);
-    strcpy(last, EMPTY);
-    strcpy(unit1, AYE);
-    strcpy(unit2, VEE);
-    strcpy(unit3, EX);
+    strncpy(str, EMPTY, MAX_BUFF);
+    strncpy(last, EMPTY, MAX_BUFF);
+    strncpy(unit1, AYE, SMALL_BUFF);
+    strncpy(unit2, VEE, SMALL_BUFF);
+    strncpy(unit3, EX, SMALL_BUFF);
  
     //  remember to fill out case statement for each digit 0 - 9
     //  0 -- do
@@ -54,19 +55,19 @@ char *dec_to_rn(UserNum un)
                 /*  do nothing */
                 break;
             case 1:
-                strcpy(unit1, EX);
-                strcpy(unit2, EL);
-                strcpy(unit3, CEE);
+                strncpy(unit1, EX, SMALL_BUFF);
+                strncpy(unit2, EL, SMALL_BUFF);
+                strncpy(unit3, CEE, SMALL_BUFF);
                 break;
             case 2:
-                strcpy(unit1, CEE);
-                strcpy(unit2, DEE);
-                strcpy(unit3, EM);
+                strncpy(unit1, CEE, SMALL_BUFF);
+                strncpy(unit2, DEE, SMALL_BUFF);
+                strncpy(unit3, EM, SMALL_BUFF);
                 break;
             case 3:
-                strcpy(unit1, EM);
-                strcpy(unit2, UNKNOWN_5000);
-                strcpy(unit3, UNKNOWN_10000);
+                strncpy(unit1, EM, SMALL_BUFF);
+                strncpy(unit2, UNKNOWN_5000, SMALL_BUFF);
+                strncpy(unit3, UNKNOWN_10000, SMALL_BUFF);
             default:
                 /*  do nothing for now TODO error message */
                 break;
@@ -78,48 +79,48 @@ char *dec_to_rn(UserNum un)
                 /*  do nothing */
                 break;
             case 0x33:   // 3
-                strcat(str, unit1);
+                strncat(str, unit1, MAX_CAT);
                 /**   FALLTHROUGH  **/
             case 0x32:   // 2
-                strcat(str, unit1);
+                strncat(str, unit1, MAX_CAT);
                 /**   FALLTHROUGH  **/
             case 0x31:   // 1
-                strcat(str, unit1);
+                strncat(str, unit1, MAX_CAT);
                 break;
             case 0x34:   // 4
-                strcat(str, unit1);
+                strncat(str, unit1, MAX_CAT);
                 /**   FALLTHROUGH  **/
             case 0x35:   // 5
-                strcat(str, unit2);
+                strncat(str, unit2, MAX_CAT);
                 break;
             case 0x36:   // 6
-                strcat(str, unit2);
-                strcat(str, unit1);
+                strncat(str, unit2, MAX_CAT);
+                strncat(str, unit1, MAX_CAT);
                 break;
             case 0x37:   // 7
-                strcat(str, unit2);
-                strcat(str, unit1);
-                strcat(str, unit1);
+                strncat(str, unit2, MAX_CAT);
+                strncat(str, unit1, MAX_CAT);
+                strncat(str, unit1, MAX_CAT);
                 break;
             case 0x38:   // 8
-                strcat(str, unit2);
-                strcat(str, unit1);
-                strcat(str, unit1);
-                strcat(str, unit1);
+                strncat(str, unit2, MAX_CAT);
+                strncat(str, unit1, MAX_CAT);
+                strncat(str, unit1, MAX_CAT);
+                strncat(str, unit1, MAX_CAT);
                 break;
             case 0x39:   // 9
-                strcat(str, unit1);
-                strcat(str, unit3);
+                strncat(str, unit1, MAX_CAT);
+                strncat(str, unit3, MAX_CAT);
                 break;
             default:
               /*  throw exception? might just print a message and call it a
                   day   */
-                strcat(str, "This option is not yet completed.");
+                strncpy(str, "This option is not yet completed.", MAX_BUFF);
         }
 
-        strcat(str, last);
-        strcpy(last, str);
-        strcpy(str, EMPTY);
+        strncat(str, last, MAX_CAT);
+        strncpy(last, str, MAX_BUFF);
+        strncpy(str, EMPTY, MAX_BUFF);
     }
 
     return last;
