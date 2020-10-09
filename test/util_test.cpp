@@ -18,10 +18,10 @@ int main(int argc, char **argv)
 
     std::cout << "Test 1: is_numeric(UserNum): " << is_numeric(user_num)
          << std::endl;
-    std::cout << "Test2: is_roman(UserNum): " << is_roman(user_num)
+    std::cout << "Test 2: is_roman(UserNum): " << is_roman(user_num)
          << std::endl;
-    std::cout << "Test3: is_valid_roman(UserNum): " << is_valid_roman(user_num)
-	 << std::endl;
+    std::cout << "Test 3: is_valid_roman(UserNum): "
+	      << is_valid_roman(user_num) << std::endl;
 
     return 0;
 }
