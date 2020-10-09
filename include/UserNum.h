@@ -6,11 +6,9 @@
 class UserNum
 {
     private:
-        char user_nums[128];  // I'm starting to think I'm not going to need this
         std::vector<char> user_numv;
     public:
         UserNum(const char *);
-        inline char * get_uns() { return this->user_nums; }
         inline std::vector<char> get_unv() { return this->user_numv; }
         inline size_t get_count() { return this->user_numv.size(); }
 };
