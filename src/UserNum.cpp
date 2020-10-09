@@ -14,5 +14,7 @@ UserNum::UserNum(const char *str)
             this->user_numv.push_back(next);
             next = *(++i + str);
         }
+
+	this->size = this->user_numv.size();
     }
 }
