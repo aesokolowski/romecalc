@@ -166,4 +166,6 @@ bool c_check(char ch, size_t *iar)
 	default:
 	    return false;
     }
+
+    return true;
 }
