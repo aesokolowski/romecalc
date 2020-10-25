@@ -4,10 +4,13 @@ compiles, runs as expected on both my Mac and Windows 10 machines... for now...
 
 targets:
 
+**** since the last attempt at parsing given roman numerals had a very clear bug, I'm going to  rewrite the function to validate proper order of Roman numerals. Still left-to-right, but will have more flags to keep track, and will build incrementally my first test ****
+
 1. errors for inputting an argument that is not implemented yet (so anything other than a decimal integer between 0 - 3999 inclusive)
 2. a function to determine if a string containing valid Roman numeral characters has them in the correct order (I also think the max is 15 characters long for 3888) and another function to actually parse it, I feel making multiple passes helps modularize the the code for future changes
-3. 
-4. help menu
+3. actually parsing the number from a known valid string
+4. learn optget and implement it
+5. help menu
 
 future:
 
