@@ -196,10 +196,45 @@ bool c_check(char ch, size_t *iar)
 //  reason I'm redoing my approach from scratch
 bool check_xvi(UserNum un)
 {
-    size_t len = un.get_count();
+    const size_t I_MASK = 0x01,
+	         V_MASK = 0x02,
+		 X_MASK = 0x04;
+
+    char last;
+    size_t in_a_row = 0,
+	   len = un.get_count(),
+	   flags = 0x00;
     std::vector<char> uv = un.get_unv();
 
-    std::cout << "Can you hear me now?    ";
+    std::cout << "hello?" << std::endl;
+
+    for (size_t i = 0; i < len; i++) {
+        char current = uv[i];
+        
+	std::cout << "in loop\ni: " << i << "\nlen: " << len << "\ncurrent: "
+		  << current << std::endl;
+	if (i > 0) {
+            // second char and later bulk of logic
+
+	    // compare flags to appropriate mask for current, helper
+            
+            // don't bother with the rest if last char
+	    if (i < len - 1) {
+	        std::cout << "last: " << last << std::endl;
+
+	        if (current == last) in_a_row++;
+	        else in_a_row = 1;
+
+	        std::cout << "in_a_row: " << in_a_row << std::endl;
+	    }
+	} else {
+            in_a_row++; // increment first char no matter what
+	}
+
+	last = current;
+    }
+
+    std::cout << "goodbye?" << std::endl;
 
     return true;
 }

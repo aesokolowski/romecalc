@@ -21,7 +21,7 @@ int main(int argc, char **argv)
     std::cout << "Test 2: is_roman(UserNum): " << is_roman(user_num)
          << std::endl;
     std::cout << "Test 3: check_xvi(UserNum): "
-	      << check_xvi(user_num) << std::endl;
+	      << check_xvi(user_num) << "\nEND TEST 3\n" << std::endl;
 
     return 0;
 }
