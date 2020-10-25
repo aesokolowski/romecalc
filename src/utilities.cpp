@@ -62,6 +62,8 @@ bool is_roman(UserNum un)
     return true;
 }
 
+/*
+
 //   determine whether or not a Roman numeral is valid, scanning from
 //   left to right
 //   this function assumes is_roman has already returned true, since all
@@ -112,7 +114,7 @@ bool is_valid_roman(UserNum un)
 		    } else {
                         return false;
 		    }
-
+Î
 		    break;
 		default:
 		    return false;
@@ -166,6 +168,38 @@ bool c_check(char ch, size_t *iar)
 	default:
 	    return false;
     }
+
+    return true;
+}
+Î
+*/
+
+//  temp: 1 - 39
+//  temp to develop parser, only for X, V and I for now, may add one digit at
+//  a time thinking of using bitwise logic to keep track, so let's say:
+//  0x00 means the next bit can be either X, V or I     0b000
+//  0x06 means the next can only be I                   0b110
+//  0x07 means any next character will be rejected      0b111
+//  
+//  first operation performed on any current character will be a mask
+//  I is illegal: AND with 0x01 (== 0x01)
+//  V is illegal: AND with 0x02
+//  X is illegal: AND with 0x04
+//
+//  the easest is V, it can only appear once in a Roman Numeral, and Xs
+//  cannot appear after it, so after checking if it's legal should OR with
+//  0b110 to mark both X and V as illegal for all future characters.
+//  I and X will depend more on the "in-a-row" and "last" variables.
+//  I can be flagged as illegal as soon as three I's in a row show up,
+//  but M needs a way to be unflagged by I for the extreme case of XXIX
+//  (also to prevent stuff like XIXX from getting through, which is the main
+//  reason I'm redoing my approach from scratch
+bool check_xvi(UserNum un)
+{
+    size_t len = un.get_count();
+    std::vector<char> uv = un.get_unv();
+
+    std::cout << "Can you hear me now?    ";
 
     return true;
 }
