@@ -27,11 +27,21 @@ run:
 
 ./rocal [base-10 Arabic integer]
 
-tests:
+tests (PS script, Windows):
+compile test:
+.\scripts\x64test.ps1
 
-g++ test/*.cpp src/utilities.cpp src/UserNum -o testme
+.\testme [string to test]
 
-./testme [string to test]
+tests (Linux, Mac):
+
+compile test:
+
+g++ test/util_test.cpp src/utilities.cpp src/UserNum.cpp -o testme
+
+run:
+
+./testme
 
 Style Notes:
 
