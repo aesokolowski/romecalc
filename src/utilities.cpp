@@ -289,7 +289,7 @@ size_t set_flags(char ch)
 
 size_t update_flags(size_t fl, char curr, char last, size_t iar)
 {
-    switch (ch) {
+    switch (curr) {
 	// I/i
 	case 0x49:
         case 0x69:
