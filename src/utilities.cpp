@@ -238,3 +238,31 @@ bool check_xvi(UserNum un)
 
     return true;
 }
+
+bool is_current_valid(size_t fl, char ch) {
+    const char *WARNING = "WARNING! Invalid character passed to is_current_valid.\nReturning false, expect garbage output.\nBlame programmer.";
+    const size_t I_MASK = 0x01,                                                                                                          V_MASK = 0x02,                                                                                                          X_MASK = 0x04;
+
+    switch (ch) {
+	// I/i
+	case 0x49:
+        case 0x69:
+            if (fl & I_MASK == I_MASK) return false;
+	    break;
+	// V/v
+        case 0x56:
+	case 0x76:
+	    if (fl & V_MASK == V_MASK) return false;
+	    break;
+	// X/x
+        case 0x58:
+	case 0x78:
+	    if (fl & X_MASK == X_MASK) return false;
+	    break;
+        default:
+	    std::cerr << WARNING << std::endl;
+	    return false;
+    }
+
+    return true;
+}

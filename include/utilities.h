@@ -20,5 +20,7 @@ bool c_check(char, size_t *);  // helper
 
 // temp, may be expanded into actual is_valid_roman or rewritten:
 bool check_xvi(UserNum);
+bool is_current_valid(size_t, char); //void
+// void updateflags?
 
 #endif //UTILITIES
