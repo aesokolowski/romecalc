@@ -8,7 +8,8 @@
 const size_t ZERO = 0x00,
              I_MASK = 0x01,
              V_MASK = 0x02,
-             X_MASK = 0x04,
+	     X_MASK0 = 0x03,
+             X_MASK1 = 0x04,
 	     NO_MORE = 0x07;
 
 //  may want to change this to return an int (0, 1, -1) with -1 meaning a
@@ -224,13 +225,11 @@ bool check_xvi(UserNum un)
             
             // don't bother with the rest if last char
 	    if (i < len - 1) {
-	        std::cout << "last: " << last << std::endl;  // debug
-
+                // track how many
 	        if (current == last) in_a_row++;
 	        else in_a_row = 1;
-
-	        std::cout << "in_a_row: " << in_a_row << std::endl; // debug
-		//TODO: update flags
+                // update flags
+		flags = update_flags(flags, current, last, in_a_row);
 	    }
 	} else {
             in_a_row++; // increment first char
@@ -261,7 +260,7 @@ bool is_current_valid(size_t fl, char ch) {
 	// X/x
         case 0x58:
 	case 0x78:
-	    if (fl & X_MASK) return false;
+	    if (fl & X_MASK1) return false;
 	    break;
         default:
 	    std::cerr << WARNING << std::endl;
@@ -281,7 +280,7 @@ size_t set_flags(char ch)
 	case 0x56:
 	case 0x76:
             // nothing except I can follow a V:
-            return V_MASK | X_MASK;	    
+            return V_MASK | X_MASK1;	    
     }
 
     return ZERO;
@@ -294,13 +293,12 @@ size_t update_flags(size_t fl, char curr, char last, size_t iar)
 	case 0x49:
         case 0x69:
 	    if (iar > 1 && iar < 3) {
-                return fl | V_MASK | X_MASK;
+                return fl | V_MASK | X_MASK1;
 	    } else if (iar >= 3) {
                 return NO_MORE;
 	    }
-
 	    if (last == 0x58 || last == 0x78) { // X/x
-                // set x bit to 0
+                return fl & X_MASK0;
 	    }
 	    break; 
         // V/v
@@ -309,12 +307,18 @@ size_t update_flags(size_t fl, char curr, char last, size_t iar)
 	    if (last == 0x49 || last == 0x69) { // I/i
                 return NO_MORE;
 	    }
-	    return fl | V_MASK | X_MASK;
+	    return fl | V_MASK | X_MASK1;
 	// X/x
 	case 0x58:
         case 0x78:
-
+	    if (last == 0x49 || last == 0x69) { // I/i
+                return NO_MORE;
+	    }
+            if (iar >= 3) {
+                return fl | X_MASK1;
+	    }
+            break;
     }
 
-    return flags;
+    return fl;
 }
