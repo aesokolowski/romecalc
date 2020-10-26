@@ -247,17 +247,18 @@ bool is_current_valid(size_t fl, char ch) {
 	// I/i
 	case 0x49:
         case 0x69:
-            if (fl & I_MASK == I_MASK) return false;
+            if (fl & I_MASK) return false;
 	    break;
 	// V/v
         case 0x56:
 	case 0x76:
-	    if (fl & V_MASK == V_MASK) return false;
+	    std::cout << "huh?" << std::endl;
+	    if (fl & V_MASK) return false;
 	    break;
 	// X/x
         case 0x58:
 	case 0x78:
-	    if (fl & X_MASK == X_MASK) return false;
+	    if (fl & X_MASK) return false;
 	    break;
         default:
 	    std::cerr << WARNING << std::endl;

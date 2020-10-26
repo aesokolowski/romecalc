@@ -1,5 +1,6 @@
 #include "../include/utilities.h"
 #include <cstring>
+#include <ios>
 #include <iostream>
 
 //  simple testing for is_current_value helper function in utilities
@@ -61,10 +62,22 @@ int main(int argc, char **argv)
     }
 
     //  convert flag to int
-    
-    //  finally call function for test
+    int nf = 0,
+	add = 1;
+    for (int i = len - 1; i >= 0; i--) {
+        if (c_fl[i] == 0x31) nf += add;
+	add *= 2;
+    }
 
-    std::cout << "No errors!" << std::endl;
+    //  display result of conversion
+    std::cout << "Bit string: " << c_fl << "\nDecimal: " << nf << "\nHex: "
+	      << std::hex << nf << std::dec << std::endl;   
+    //  finally call function for test
+    if (is_current_valid(nf, ch)) {
+        std::cout << "is_current_valid returned true." << std::endl;
+    } else {
+        std::cout << "is_current_valid returned false." << std::endl;
+    }
 
     return 0;
 }
