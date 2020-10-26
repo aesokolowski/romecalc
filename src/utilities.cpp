@@ -4,6 +4,11 @@
 #include <iostream>  // debug
 #include <vector>
 
+const size_t ZERO = 0x00,
+             I_MASK = 0x01,
+             V_MASK = 0x02,
+             X_MASK = 0x04;
+
 //  may want to change this to return an int (0, 1, -1) with -1 meaning a
 //  string is numeric, but contains one (and only one) decimal point
 bool is_numeric(UserNum un)
@@ -196,27 +201,18 @@ bool c_check(char ch, size_t *iar)
 //  reason I'm redoing my approach from scratch
 bool check_xvi(UserNum un)
 {
-    const size_t I_MASK = 0x01,
-	         V_MASK = 0x02,
-		 X_MASK = 0x04;
-
     char last;
     size_t in_a_row = 0,
 	   len = un.get_count(),
 	   flags = 0x00;
     std::vector<char> uv = un.get_unv();
 
-    std::cout << "hello?" << std::endl;
-
     for (size_t i = 0; i < len; i++) {
         char current = uv[i];
-        
-	std::cout << "in loop\ni: " << i << "\nlen: " << len << "\ncurrent: "
-		  << current << std::endl;
-	if (i > 0) {
-            // second char and later bulk of logic
 
-	    // compare flags to appropriate mask for current, helper
+	if (i > 0) {
+	    // compare flags to appropriate mask for current
+	    if (!(is_current_valid(flags, current))) return false;
             
             // don't bother with the rest if last char
 	    if (i < len - 1) {
@@ -226,22 +222,21 @@ bool check_xvi(UserNum un)
 	        else in_a_row = 1;
 
 	        std::cout << "in_a_row: " << in_a_row << std::endl;
+		//TODO: update flags
 	    }
 	} else {
             in_a_row++; // increment first char no matter what
+	    flags = set_flags(current);
 	}
 
 	last = current;
     }
-
-    std::cout << "goodbye?" << std::endl;
 
     return true;
 }
 
 bool is_current_valid(size_t fl, char ch) {
     const char *WARNING = "WARNING! Invalid character passed to is_current_valid.\nReturning false, expect garbage output.\nBlame programmer.";
-    const size_t I_MASK = 0x01,                                                                                                          V_MASK = 0x02,                                                                                                          X_MASK = 0x04;
 
     switch (ch) {
 	// I/i
@@ -252,7 +247,6 @@ bool is_current_valid(size_t fl, char ch) {
 	// V/v
         case 0x56:
 	case 0x76:
-	    std::cout << "huh?" << std::endl;
 	    if (fl & V_MASK) return false;
 	    break;
 	// X/x
@@ -266,4 +260,24 @@ bool is_current_valid(size_t fl, char ch) {
     }
 
     return true;
+}
+
+//  if the first char is V (or L/D in the future), flags need to be set because
+//  any further occurances means invalid Roman Numeral... in the future this
+//  will get bigger... an initial I will prevent subseq. Ls or Cs, for example
+size_t set_flags(char ch)
+{
+    switch(ch) {
+	// V/v
+	case 0x56:
+	case 0x76:
+            return V_MASK | X_MASK;	    
+    }
+
+    return ZERO;
+}
+
+size_t update_flags(size_t fl, char curr, char last, size_t iar)
+{
+    
 }
