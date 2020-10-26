@@ -18,6 +18,8 @@ char *dec_to_rn(UserNum un)
                *EM            = "M",
 	       *UNKNOWN_5000  = "?",
 	       *UNKNOWN_10000 = "!";
+    const char *CHAR_CHANGE_ERR = "ERROR: cannot handle input more than 4 digits long.",
+	       *ILL_DIG_ERR =     "INTERNAL ERROR: illegal character detected, please this problem report to github.com/aesokolowski.";
 
     char *last = new char[MAX_BUFF];
     char str[MAX_BUFF];
@@ -48,8 +50,10 @@ char *dec_to_rn(UserNum un)
     //  4 -- XL
     //  etc
     //  up until 4 thousand, at least for now
-    for (int i = size - 1; i >= 0; i--) {  // maybe should go backwards?
-        //  switch statement to change characters  TODO *******
+    for (int i = size - 1; i >= 0; i--) {
+        bool breaker = false;
+
+        //  switch statement to change characters
         switch (digit++) {
             case 0:
                 /*  do nothing */
@@ -68,10 +72,13 @@ char *dec_to_rn(UserNum un)
                 strncpy(unit1, EM, SMALL_BUFF);
                 strncpy(unit2, UNKNOWN_5000, SMALL_BUFF);
                 strncpy(unit3, UNKNOWN_10000, SMALL_BUFF);
+		break;
             default:
-                /*  do nothing for now TODO error message */
-                break;
+		breaker = true;
+                strncpy(last, CHAR_CHANGE_ERR, MAX_BUFF); 
         }
+
+	if (breaker) break;
 
         //  switch to distribute characters
         switch (uv[i]) {
@@ -113,10 +120,11 @@ char *dec_to_rn(UserNum un)
                 strncat(str, unit3, MAX_CAT);
                 break;
             default:
-              /*  throw exception? might just print a message and call it a
-                  day   */
-                strncpy(str, "This option is not yet completed.", MAX_BUFF);
+                breaker = true; 
+                strncpy(last, ILL_DIG_ERR, MAX_BUFF);
         }
+
+        if (breaker) break;
 
         strncat(str, last, MAX_CAT);
         strncpy(last, str, MAX_BUFF);

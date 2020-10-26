@@ -45,7 +45,7 @@ void initial(int argc, char **argv)
 {
     const size_t MAX_BUFF = 128;
     const char *MSG_0_ARGS = "Please provide an argument.",
-	       *INVALID_INPUT = "Input must be a decimal number in Arabic numbers.",
+	       *INVALID_INPUT = "Input must be a positive decimal integer in Arabic numerals or standard Roman Numerals.",
                *TOO_MANY_ARGS = "Too many arguments... for now...";
 
 
@@ -64,11 +64,14 @@ void initial(int argc, char **argv)
         case 2:
 	    if (is_numeric(user_num)) {
                 solution = dec_to_rn(user_num);
+	    } else if (is_roman(user_num)) {
+                // TODO: perform
+		solution = new char[MAX_BUFF];
+		strncpy(solution, "Coming soon: Roman to Arabic numerals.", MAX_BUFF); //temp
 	    } else {
 	        solution = new char[MAX_BUFF];
                 strncpy(solution, INVALID_INPUT, MAX_BUFF);
 	    }
-            
             break;
         default:
             solution = new char[MAX_BUFF];

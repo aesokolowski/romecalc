@@ -4,6 +4,8 @@
 #include <iostream>
 #include <vector>
 
+const char *WARNING = "INTERNAL ERROR: illegal Roman Numeral detected, aborting program. Report to dev.";
+
 // NOTE: NO_MORE needs to be changed as bits are added
 const size_t ZERO = 0x00,
              I_MASK = 0x01,
@@ -11,6 +13,7 @@ const size_t ZERO = 0x00,
 	     X_MASK0 = 0x03,
              X_MASK1 = 0x04,
 	     NO_MORE = 0x07;
+
 
 //  may want to change this to return an int (0, 1, -1) with -1 meaning a
 //  string is numeric, but contains one (and only one) decimal point
@@ -122,7 +125,6 @@ bool is_valid_roman(UserNum un)
 		    } else {
                         return false;
 		    }
-Î
 		    break;
 		default:
 		    return false;
@@ -179,7 +181,6 @@ bool c_check(char ch, size_t *iar)
 
     return true;
 }
-Î
 */
 
 
@@ -244,8 +245,6 @@ bool check_xvi(UserNum un)
 }
 
 bool is_current_valid(size_t fl, char ch) {
-    const char *WARNING = "WARNING! Invalid character passed to is_current_valid.\nReturning false, expect garbage output.\nBlame programmer.";
-
     switch (ch) {
 	// I/i
 	case 0x49:
@@ -280,7 +279,10 @@ size_t set_flags(char ch)
 	case 0x56:
 	case 0x76:
             // nothing except I can follow a V:
-            return V_MASK | X_MASK1;	    
+            return V_MASK | X_MASK1;
+	default:
+	    /* do nothing, might add illegal char check for formality */
+	    break;
     }
 
     return ZERO;
@@ -288,6 +290,8 @@ size_t set_flags(char ch)
 
 size_t update_flags(size_t fl, char curr, char last, size_t iar)
 {
+    const char *WARNING = "INTERNAL ERROR: illegal Roman Numeral detected, aborting program. Report to dev.";
+
     switch (curr) {
 	// I/i
 	case 0x49:
@@ -318,6 +322,9 @@ size_t update_flags(size_t fl, char curr, char last, size_t iar)
                 return fl | X_MASK1;
 	    }
             break;
+        default:
+	    std::cerr << WARNING << std::endl;
+	    return NO_MORE;
     }
 
     return fl;
