@@ -1,13 +1,15 @@
 #include "../include/UserNum.h"
 #include "../include/utilities.h"
 #include <cstring>
-#include <iostream>  // debug
+#include <iostream>
 #include <vector>
 
+// NOTE: NO_MORE needs to be changed as bits are added
 const size_t ZERO = 0x00,
              I_MASK = 0x01,
              V_MASK = 0x02,
-             X_MASK = 0x04;
+             X_MASK = 0x04,
+	     NO_MORE = 0x07;
 
 //  may want to change this to return an int (0, 1, -1) with -1 meaning a
 //  string is numeric, but contains one (and only one) decimal point
@@ -179,6 +181,12 @@ bool c_check(char ch, size_t *iar)
 Î
 */
 
+
+
+
+
+
+
 //  temp: 1 - 39
 //  temp to develop parser, only for X, V and I for now, may add one digit at
 //  a time thinking of using bitwise logic to keep track, so let's say:
@@ -187,7 +195,7 @@ bool c_check(char ch, size_t *iar)
 //  0x07 means any next character will be rejected      0b111
 //  
 //  first operation performed on any current character will be a mask
-//  I is illegal: AND with 0x01 (== 0x01)
+//  I is illegal: AND with 0x01
 //  V is illegal: AND with 0x02
 //  X is illegal: AND with 0x04
 //
@@ -196,9 +204,9 @@ bool c_check(char ch, size_t *iar)
 //  0b110 to mark both X and V as illegal for all future characters.
 //  I and X will depend more on the "in-a-row" and "last" variables.
 //  I can be flagged as illegal as soon as three I's in a row show up,
-//  but M needs a way to be unflagged by I for the extreme case of XXIX
+//  but M needs a way to be unflagged by I for the extreme case of XXXIX
 //  (also to prevent stuff like XIXX from getting through, which is the main
-//  reason I'm redoing my approach from scratch
+//  reason I'm redoing my approach from scratch)
 bool check_xvi(UserNum un)
 {
     char last;
@@ -216,17 +224,18 @@ bool check_xvi(UserNum un)
             
             // don't bother with the rest if last char
 	    if (i < len - 1) {
-	        std::cout << "last: " << last << std::endl;
+	        std::cout << "last: " << last << std::endl;  // debug
 
 	        if (current == last) in_a_row++;
 	        else in_a_row = 1;
 
-	        std::cout << "in_a_row: " << in_a_row << std::endl;
+	        std::cout << "in_a_row: " << in_a_row << std::endl; // debug
 		//TODO: update flags
 	    }
 	} else {
-            in_a_row++; // increment first char no matter what
-	    flags = set_flags(current);
+            in_a_row++; // increment first char
+	    flags = set_flags(current); // first char has separate set instead
+	                                // of update
 	}
 
 	last = current;
@@ -267,10 +276,11 @@ bool is_current_valid(size_t fl, char ch) {
 //  will get bigger... an initial I will prevent subseq. Ls or Cs, for example
 size_t set_flags(char ch)
 {
-    switch(ch) {
+    switch (ch) {
 	// V/v
 	case 0x56:
 	case 0x76:
+            // nothing except I can follow a V:
             return V_MASK | X_MASK;	    
     }
 
@@ -279,5 +289,32 @@ size_t set_flags(char ch)
 
 size_t update_flags(size_t fl, char curr, char last, size_t iar)
 {
-    
+    switch (ch) {
+	// I/i
+	case 0x49:
+        case 0x69:
+	    if (iar > 1 && iar < 3) {
+                return fl | V_MASK | X_MASK;
+	    } else if (iar >= 3) {
+                return NO_MORE;
+	    }
+
+	    if (last == 0x58 || last == 0x78) { // X/x
+                // set x bit to 0
+	    }
+	    break; 
+        // V/v
+	case 0x56:
+        case 0x76:
+	    if (last == 0x49 || last == 0x69) { // I/i
+                return NO_MORE;
+	    }
+	    return fl | V_MASK | X_MASK;
+	// X/x
+	case 0x58:
+        case 0x78:
+
+    }
+
+    return flags;
 }

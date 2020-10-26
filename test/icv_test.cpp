@@ -44,7 +44,7 @@ int main(int argc, char **argv)
 	return 1;
     }
     
-    //  make sure current valid roman numeral (add more later as scaling up)
+    //  make sure valid roman numeral (add more later as scaling up)
     char ch = c_ch[0];
     switch (ch) {
 	case 0x49:
