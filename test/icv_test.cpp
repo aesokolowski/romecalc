@@ -58,7 +58,7 @@ int main(int argc, char **argv)
         default:
 	    std::cerr << "Current valid list of characters for second argument"
 		      << ":\nI i V v X x" << std::endl;
-	    return false;
+	    return 1;
     }
 
     //  convert flag to int
