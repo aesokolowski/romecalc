@@ -19,7 +19,7 @@ char *dec_to_rn(UserNum un)
 	       *UNKNOWN_5000  = "?",
 	       *UNKNOWN_10000 = "!";
     const char *CHAR_CHANGE_ERR = "ERROR: cannot handle input more than 4 digits long.",
-	       *ILL_DIG_ERR =     "INTERNAL ERROR: illegal character detected, please this problem report to github.com/aesokolowski.";
+	       *ILL_DIG_ERR =     "INTERNAL ERROR: illegal character detected, please report to dev.";
 
     char *last = new char[MAX_BUFF];
     char str[MAX_BUFF];
@@ -132,4 +132,20 @@ char *dec_to_rn(UserNum un)
     }
 
     return last;
+}
+
+//  may help to identify groups, to map to decimal numbers i.e.
+//  XXXIX = 39   XXX = 30  IX = 9
+//  XXVIII = 28  XX = 20 VIII = 8
+//
+//  Next step would simply be to add them up and sprintf the result to a
+//  string buffer and return it.
+//
+//  Before bothering to identify groups, I may just add up the numbers
+//  with a lookahead to switch I to -1 if followed by a V or X, and simply
+//  add everything up.
+//  So XXXIV -> 1. 10, 2. 20, 3. 30, 4. 29, 5. 34
+char *rn_to_dec (UserNum un)
+{
+
 }
