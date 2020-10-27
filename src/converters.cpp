@@ -154,11 +154,11 @@ char *rn_to_dec (UserNum un)
     std::vector<char> uv = un.get_unv();
     int lc = count - 1; // last char
     int sum = 0;
+    int i_value;
 
     char *result = new char[MAX_BUFF];
 
     for (size_t i = 0; i < count; i++) {
-	int i_value = 1;
         switch (uv[i]) {
 	    case 0x49: // I/i
             case 0x69:
