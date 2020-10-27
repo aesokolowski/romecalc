@@ -64,10 +64,8 @@ void initial(int argc, char **argv)
         case 2:
 	    if (is_numeric(user_num)) {
                 solution = dec_to_rn(user_num);
-	    } else if (is_roman(user_num)) {
-                // TODO: perform
-		solution = new char[MAX_BUFF];
-		strncpy(solution, "Coming soon: Roman to Arabic numerals.", MAX_BUFF); //temp
+	    } else if (is_roman(user_num) && check_xvi(user_num)) {
+		solution = rn_to_dec(user_num);
 	    } else {
 	        solution = new char[MAX_BUFF];
                 strncpy(solution, INVALID_INPUT, MAX_BUFF - 1);
