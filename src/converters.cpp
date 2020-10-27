@@ -1,3 +1,4 @@
+#include "../include/constants.h"
 #include "../include/converters.h"
 #include "../include/UserNum.h"
 #include <cstring>
@@ -5,11 +6,6 @@
 
 char *dec_to_rn(UserNum un)
 {
-    // TODO I'm going to want to use globals for at least the top bunch, need
-    // to brush up on my extern-foo
-    const size_t MAX_BUFF = 128,
-	         SMALL_BUFF = 2,
-		 MAX_CAT = 63;
     const char *EMPTY         = "",
 	       *AYE           = "I",
 	       *VEE           = "V",
@@ -32,6 +28,7 @@ char *dec_to_rn(UserNum un)
     size_t size = un.get_count();
     size_t digit = 0;
     std::vector<char> uv = un.get_unv();
+    bool breaker = false;
 
     strncpy(str, EMPTY, MAX_BUFF);
     strncpy(last, EMPTY, MAX_BUFF);
@@ -53,8 +50,6 @@ char *dec_to_rn(UserNum un)
     //  etc
     //  up until 4 thousand, at least for now
     for (int i = size - 1; i >= 0; i--) {
-        bool breaker = false;
-
         //  switch statement to change characters
         switch (digit++) {
             case 0:
@@ -150,7 +145,6 @@ char *dec_to_rn(UserNum un)
 //  IX -> 1. -1 2. 9
 char *rn_to_dec (UserNum un)
 {
-    const size_t MAX_BUFF = 128;
     size_t count = un.get_count();
     int lc = count - 1; // last char
     int sum = 0;
