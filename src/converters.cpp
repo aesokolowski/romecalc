@@ -18,7 +18,7 @@ char *dec_to_rn(UserNum un)
                *EM            = "M",
 	       *UNKNOWN_5000  = "?",
 	       *UNKNOWN_10000 = "!";
-    const char *CHAR_CHANGE_ERR = "ERROR: cannot handle input more than 4 digits long.",
+    const char *CHAR_CHANGE_ERR = "ERROR: Decimal Arabic numerals input limited to 4 digits (max standard Roman numerals is 3999).",
 	       *ILL_DIG_ERR =     "INTERNAL ERROR: illegal character detected, please report to dev.";
 
     char *last = new char[MAX_BUFF];

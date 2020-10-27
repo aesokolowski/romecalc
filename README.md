@@ -1,67 +1,83 @@
 # Roman Numeral converter/calculator tool for command line (C++)
 
-compiles, runs as expected on both my Mac and Windows 10 machines... for now...
+So far just a converter. Arabic to Roman up to 4 digits:
+
+rocal 1 -> I
+
+rocal 45 -> XLV
+
+rocal 3999 -> MMMCMXCIX
+
+Arabic numerals 4000 - 9999 will give output, but ? is used to represent 5000 and ! is used to represent 10000.
+
+rocal 4500 -> M?D
+
+rocal 9000 -> M!
+
+Roman numeral to Arabic decimal partially implemented. Parses I, V and X for now (1-39). Implementing L and C next, then D and M.
+
+rocal i -> 1
+rocal xx -> 20
+rocal xxxiv -> 34
 
 targets:
 
-**** since the last attempt at parsing given roman numerals had a very clear bug, I'm going to  rewrite the function to validate proper order of Roman numerals. Still left-to-right, but will have more flags to keep track, and will build incrementally my first test ****
+1. check Mac (*nix?) compatibility and write bash scripts for compilation
 
-1. errors for inputting an argument that is not implemented yet (so anything other than a decimal integer between 0 - 3999 inclusive)
-2. a function to determine if a string containing valid Roman numeral characters has them in the correct order (I also think the max is 15 characters long for 3888) and another function to actually parse it, I feel making multiple passes helps modularize the the code for future changes
-3. actually parsing the number from a known valid string
-4. learn optget and implement it
-5. help menu
+2. scale up Roman-to-Arabic function incrementally
 
-future:
+3. fix pipe / redirect issue
 
-support different bases (especially for Arabic numerals), expand for list of arguments, Roman fractions
+4. implement optget-long (argument parser) and add help menu
 
+5. calculator functions
 
-doesn't even do as advertised yet -- works the easy way, 0 - 3999 base-10 Arabic numerals to Roman numerals but even that can't be piped or inserted (Mac) because the file/program will just take "Too many arguments."
+6. multiple bases for Arabic numerals
 
-compile (GNU):
+COMPILATION:
 
-g++ src/*.cpp -o rocal
+my scripts use g++ (GNU) and are intended to be run from the root directory:
+
+compile program (Windows):
+
+.\scripts\x64comp.ps1
 
 run:
 
-./rocal [base-10 Arabic integer]
+.\rocal [Arabic or Roman numeral]
 
-tests (PS script, Windows):
-compile test:
+compile tests (Windows):
+
 .\scripts\x64test.ps1
 
-.\testme [string to test]
+outputs multiple test programs that accept arguments. Windows sticks a .exe at the end of the file but you don't need to include it:
 
-tests (Linux, Mac):
+.\testutils [arabic or Roman numerals]
 
-compile test:
+.\testconvs [arabic or Roman numerals]
 
-g++ test/util_test.cpp src/utilities.cpp src/UserNum.cpp -o testme
-
-run:
-
-./testme
+.\testicv [bitfield] [character]
 
 Style Notes:
 
 1. star spacing -- for simplicity's sake, I prefer to use uniform spacing regardless of an *'s purpose, I attach it to the right-hand-side
 
-return pointer:
+   return pointer:
 
-myType *myFunction(myType myArgument) {}
+   myType *myFunction(myType myArgument) {}
 
-passed pointer:
+   passed pointer:
 
-myType myFunction(myType *myArgument) {}
+   myType myFunction(myType *myArgument) {}
 
-declare pointer:
+   declare pointer:
 
-myType *myPointer;
+   myType *myPointer;
 
-dereference pointer:
+   dereference pointer:
 
-*myPointer = myValue;
-myVariable = *myPointer
+   *myPointer = myValue;
 
-2. don't really see a reason to use std::string for this program, the only thing I really dislike about cstrings is that long literals have no choice but to spill over to the next line but I try to stick them all in consts in one specific section anyway to not uglify the whole file.
+   myVariable = *myPointer
+
+2. don't really see a reason to use std::string for this program. User input is represented as a vector of chars internally. Also I'm more familiar with the <cstring> library than <string> since I've done more C lately than C++.

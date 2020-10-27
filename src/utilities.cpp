@@ -172,6 +172,7 @@ size_t set_flags(char ch)
     return ZERO;
 }
 
+//  worked this out with pen and paper: trust me, it works. here be bitwise.
 size_t update_flags(size_t fl, char curr, char last, size_t iar)
 {
     const char *WARNING = "INTERNAL ERROR: illegal Roman Numeral detected, aborting program. Report to dev.";
