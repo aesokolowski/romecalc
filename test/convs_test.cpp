@@ -17,9 +17,13 @@ int main(int argc, char **argv)
     UserNum user_num(argv[1]);
 
     std::cout << "Test 1: dec_to_rn(UserNum): ";
-    char *result = dec_to_rn(user_num);
-    std::cout << result << std::endl;
-    delete result; result = NULL;
+    char *res1 = dec_to_rn(user_num);
+    std::cout << res1 << std::endl;
+    delete res1; res1 = NULL;
+    std::cout << "Test 2: rn_todec(UserNum): ";
+    char *res2 = rn_to_dec(user_num);
+    std::cout << res2 << std::endl;
+    delete res2; res2 = NULL;
 
     return 0;
 }

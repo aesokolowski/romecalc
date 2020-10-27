@@ -1,7 +1,9 @@
 #include "../include/constants.h"
 #include "../include/converters.h"
 #include "../include/UserNum.h"
+#include <cstdio>
 #include <cstring>
+#include <iostream> // debug?
 #include <vector>
 
 char *dec_to_rn(UserNum un)
@@ -131,26 +133,58 @@ char *dec_to_rn(UserNum un)
     return last;
 }
 
-//  may help to identify groups, to map to decimal numbers i.e.
-//  XXXIX = 39   XXX = 30  IX = 9
-//  XXVIII = 28  XX = 20 VIII = 8
+//  Add up each character encountered, with the "lookahead exception" for
+//  I (can be followed by V or X) in which case it adds -1 instead of 1.
+//  Obviously this concept will have to be expanded to X when I add L and
+//  C (and then D and M) to the pile.
 //
-//  Next step would simply be to add them up and sprintf the result to a
-//  string buffer and return it.
+//  As with dec_to_rn this function depends on previous passes through
+//  validators in order to work. As noted in other comments throughout the
+//  code, I chose to make multiple passes over given strings for modularity
+//  and because the strings aren't terribly long to begin with (not
+//  withstanding the crazy idea of adding custom Roman Numerals in order to
+//  use larger numbers, but for that I'd prefer a switch to enable "interactive
+//  mode" [read: menu/loop-based] instead of using command line arguments).
 //
-//  Before bothering to identify groups, I may just add up the numbers
-//  with a lookahead to switch I to -1 if followed by a V or X, and simply
-//  add everything up.
 //  So XXXIV -> 1. 10, 2. 20, 3. 30, 4. 29, 5. 34
 //  IX -> 1. -1 2. 9
 char *rn_to_dec (UserNum un)
 {
     size_t count = un.get_count();
+    std::vector<char> uv = un.get_unv();
     int lc = count - 1; // last char
     int sum = 0;
 
-    // temp, obvs:
-    char *dummy = new char[MAX_BUFF];
-    strncpy(dummy, "TODO", MAX_BUFF - 1); 
-    return dummy;
+    char *result = new char[MAX_BUFF];
+
+    for (size_t i = 0; i < count; i++) {
+	int i_value = 1;
+        switch (uv[i]) {
+	    case 0x49: // I/i
+            case 0x69:
+		i_value = 1;
+                if (i < lc) {
+		    char la = uv[i + 1]; // lookahead
+                    if (la == 0x56 || la == 0x76 || la == 0x58 || la == 0x78) {
+                        i_value = -1;
+		    }
+		} 
+		sum += i_value;
+		break;
+	    case 0x56:  // V/v
+	    case 0x76:
+	        sum += 5;
+		break;
+            case 0x58:  // X/x
+	    case 0x78:
+		sum += 10;
+		break;
+            default:
+		std::cerr << "lol hit default" << std::endl; // TODO: lift and professionalize
+	}
+    }
+
+    sprintf(result, "%d", sum);
+ 
+    return result;
 }
