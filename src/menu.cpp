@@ -59,7 +59,7 @@ void initial(int argc, char **argv)
     switch (argc) {
         case 1:
             solution = new char[MAX_BUFF];
-            strncpy(solution, MSG_0_ARGS, MAX_BUFF);
+            strncpy(solution, MSG_0_ARGS, MAX_BUFF - 1);
             break;
         case 2:
 	    if (is_numeric(user_num)) {
@@ -70,12 +70,12 @@ void initial(int argc, char **argv)
 		strncpy(solution, "Coming soon: Roman to Arabic numerals.", MAX_BUFF); //temp
 	    } else {
 	        solution = new char[MAX_BUFF];
-                strncpy(solution, INVALID_INPUT, MAX_BUFF);
+                strncpy(solution, INVALID_INPUT, MAX_BUFF - 1);
 	    }
             break;
         default:
             solution = new char[MAX_BUFF];
-	    strncpy(solution, TOO_MANY_ARGS, MAX_BUFF);
+	    strncpy(solution, TOO_MANY_ARGS, MAX_BUFF - 1);
 	    break;
     }
 

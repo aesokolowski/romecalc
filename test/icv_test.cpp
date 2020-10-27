@@ -3,7 +3,7 @@
 #include <ios>
 #include <iostream>
 
-//  simple testing for is_current_value helper function in utilities
+//  simple testing for is_current_valid helper function in utilities
 
 int main(int argc, char **argv)
 {

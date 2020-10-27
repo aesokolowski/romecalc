@@ -1,7 +1,11 @@
 a.out
 a.exe
-testme
-testme.exe
+testutils
+testutils.exe
+testicv
+testicv.exe
+testconvs
+testconvs.exe
 rocal
 rocal.exe
 *.swp

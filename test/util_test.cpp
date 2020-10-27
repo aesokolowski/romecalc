@@ -1,6 +1,9 @@
+#include "../include/converters.h"
 #include "../include/utilities.h"
 #include "../include/UserNum.h"
 #include <iostream>
+
+
 
 int main(int argc, char **argv)
 {
@@ -17,11 +20,10 @@ int main(int argc, char **argv)
     UserNum user_num(argv[1]);
 
     std::cout << "Test 1: is_numeric(UserNum): " << is_numeric(user_num)
-         << std::endl;
+              << std::endl;
     std::cout << "Test 2: is_roman(UserNum): " << is_roman(user_num)
-         << std::endl;
+              << std::endl;
     std::cout << "Test 3: check_xvi(UserNum): "
 	      << check_xvi(user_num) << std::endl;
-
     return 0;
 }

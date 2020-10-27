@@ -5,6 +5,8 @@
 
 char *dec_to_rn(UserNum un)
 {
+    // TODO I'm going to want to use globals for at least the top bunch, need
+    // to brush up on my extern-foo
     const size_t MAX_BUFF = 128,
 	         SMALL_BUFF = 2,
 		 MAX_CAT = 63;
@@ -27,8 +29,8 @@ char *dec_to_rn(UserNum un)
     char unit2[SMALL_BUFF];
     char unit3[SMALL_BUFF];
     
-    int size = un.get_count();
-    int digit = 0;
+    size_t size = un.get_count();
+    size_t digit = 0;
     std::vector<char> uv = un.get_unv();
 
     strncpy(str, EMPTY, MAX_BUFF);
@@ -121,14 +123,14 @@ char *dec_to_rn(UserNum un)
                 break;
             default:
                 breaker = true; 
-                strncpy(last, ILL_DIG_ERR, MAX_BUFF);
+                strncpy(last, ILL_DIG_ERR, MAX_BUFF - 1);
         }
 
         if (breaker) break;
 
         strncat(str, last, MAX_CAT);
-        strncpy(last, str, MAX_BUFF);
-        strncpy(str, EMPTY, MAX_BUFF);
+        strncpy(last, str, MAX_BUFF - 1);
+        strncpy(str, EMPTY, MAX_BUFF - 1);
     }
 
     return last;
@@ -145,7 +147,16 @@ char *dec_to_rn(UserNum un)
 //  with a lookahead to switch I to -1 if followed by a V or X, and simply
 //  add everything up.
 //  So XXXIV -> 1. 10, 2. 20, 3. 30, 4. 29, 5. 34
+//  IX -> 1. -1 2. 9
 char *rn_to_dec (UserNum un)
 {
+    const size_t MAX_BUFF = 128;
+    size_t count = un.get_count();
+    int lc = count - 1; // last char
+    int sum = 0;
 
+    // temp, obvs:
+    char *dummy = new char[MAX_BUFF];
+    strncpy(dummy, "TODO", MAX_BUFF - 1); 
+    return dummy;
 }
