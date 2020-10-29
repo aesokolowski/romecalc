@@ -158,19 +158,19 @@ char *rn_to_dec (UserNum un)
     char *result = new char[MAX_BUFF];
 
     for (size_t i = 0; i < count; i++) {
-	int i_value;
+	int value;
 
         switch (uv[i]) {
 	    case 0x49: // I/i
             case 0x69:
-		i_value = 1;
+		value = 1;
                 if (i < lc) {
 		    char la = uv[i + 1]; // lookahead
                     if (la == 0x56 || la == 0x76 || la == 0x58 || la == 0x78) {
-                        i_value = -1;
+                        value = -1;
 		    }
 		} 
-		sum += i_value;
+		sum += value;
 		break;
 	    case 0x56:  // V/v
 	    case 0x76:
@@ -178,7 +178,22 @@ char *rn_to_dec (UserNum un)
 		break;
             case 0x58:  // X/x
 	    case 0x78:
-		sum += 10;
+		value = 10;
+		if (i < lc) {
+                    char la = uv[i + 1]; // lookahead
+	            if (la == 0x4c || la == 0x6c || la == 0x43 || la == 0x62) {
+                        value = -10;
+		    }
+		}
+		sum += value;
+		break;
+	    case 0x4c:  // L/l
+	    case 0x6c:
+		sum += 50;
+		break;
+	    case 0x43:  // C/c
+	    case 0x63:
+		sum += 100;
 		break;
             default:
 		std::cerr << "lol hit default" << std::endl; // TODO: lift and professionalize
