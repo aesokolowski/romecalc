@@ -235,7 +235,7 @@ size_t update_flags(size_t fl, char curr, char last, size_t iar)
                 return fl & C_MASK1 | L_MASK;
 	    } 
 	    if (iar > 1 && iar < 3) {
-                return fl & C_MASK1 | L_MASK;
+                return fl | C_MASK1 | L_MASK;
 	    }
             if (iar >= 3) {
                 return fl | X_MASK1;
@@ -254,7 +254,7 @@ size_t update_flags(size_t fl, char curr, char last, size_t iar)
         // C/c
 	case 0x43:
         case 0x63:
-            if (last == 0x58 || last == 0x58) { // X/x
+            if (last == 0x58 || last == 0x78) { // X/x
                 return fl | C_MASK1 | L_MASK | X_MASK1;
 	    }
 	    if (iar >= 3) {
