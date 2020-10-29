@@ -20,11 +20,11 @@ int main(int argc, char **argv)
 	return 1;
     }
 
-    //  check valid flag, for now length = 3:
+    //  check valid flag, for now length = 5:
     char *c_fl = argv[1];
     size_t len = strlen(c_fl);
-    if (len != 3) {
-        std::cerr << "Current flag length must be 3." << std::endl;
+    if (len != 5) {
+        std::cerr << "Current flag length must be 5." << std::endl;
 	return 1;
     }
 
@@ -53,11 +53,15 @@ int main(int argc, char **argv)
 	case 0x76:
 	case 0x58:
 	case 0x78:
+        case 0x4C:
+	case 0x6C:
+	case 0x43:
+	case 0x63:
 	    /*** do nothing ***/
 	    break;
         default:
 	    std::cerr << "Current valid list of characters for second argument"
-		      << ":\nI i V v X x" << std::endl;
+		      << ":\nI i V v X x L l C c" << std::endl;
 	    return 1;
     }
 

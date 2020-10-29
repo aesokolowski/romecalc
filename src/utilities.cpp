@@ -6,14 +6,17 @@
 
 const char *WARNING = "INTERNAL ERROR: illegal Roman Numeral detected, aborting program. Report to dev.";
 
-// NOTE: NO_MORE needs to be changed as bits are added
-const size_t ZERO = 0x00,
-             I_MASK = 0x01,
-             V_MASK = 0x02,
-	     X_MASK0 = 0x03,
+// NOTE: NO_MORE needs to be changed as bits are added,
+// as well as 0 masks
+const size_t ZERO    = 0x00,
+             I_MASK  = 0x01,
+             V_MASK  = 0x02,
+	     X_MASK0 = 0x1a,
              X_MASK1 = 0x04,
-	     NO_MORE = 0x07;
-
+	     L_MASK  = 0x08,
+	     C_MASK0 = 0x0f,
+	     C_MASK1 = 0x10,
+	     NO_MORE = 0x1f; 
 
 //  may want to change this to return an int (0, 1, -1) with -1 meaning a
 //  string is numeric, but contains one (and only one) decimal point
@@ -73,6 +76,8 @@ bool is_roman(UserNum un)
     return true;
 }
 
+/********  outdated comments but not deleting because it decribes original
+ *         thought process
 //  temp: 1 - 39
 //  temp to develop parser, only for X, V and I for now, may add one digit at
 //  a time thinking of using bitwise logic to keep track, so let's say:
@@ -93,12 +98,16 @@ bool is_roman(UserNum un)
 //  but M needs a way to be unflagged by I for the extreme case of XXXIX
 //  (also to prevent stuff like XIXX from getting through, which is the main
 //  reason I'm redoing my approach from scratch)
+//  *******/
+
+//  expanded logic to include l and c doesn't seem to require any changes in
+//  this function
 bool check_xvi(UserNum un)
 {
     char last;
     size_t in_a_row = 0,
 	   len = un.get_count(),
-	   flags = 0x00;
+	   flags = ZERO;
     std::vector<char> uv = un.get_unv();
 
     for (size_t i = 0; i < len; i++) {
@@ -145,6 +154,16 @@ bool is_current_valid(size_t fl, char ch) {
 	case 0x78:
 	    if (fl & X_MASK1) return false;
 	    break;
+	// L/l
+	case 0x4c:
+	case 0x6c:
+	    if (fl & L_MASK) return false;
+	    break;
+	// C/c
+	case 0x43:
+	case 0x63:
+            if (fl & C_MASK1) return false;
+	    break;
         default:
 	    std::cerr << WARNING << std::endl;
 	    return false;
@@ -153,17 +172,25 @@ bool is_current_valid(size_t fl, char ch) {
     return true;
 }
 
-//  if the first char is V (or L/D in the future), flags need to be set because
-//  any further occurances means invalid Roman Numeral... in the future this
-//  will get bigger... an initial I will prevent subseq. Ls or Cs, for example
+//  if the first char is V, L, or D, flags need to be set because
+//  any further occurances means invalid Roman Numeral. I can rule out
+//  M D C and L.
 size_t set_flags(char ch)
 {
     switch (ch) {
 	// V/v
 	case 0x56:
 	case 0x76:
-            // nothing except I can follow a V:
-            return V_MASK | X_MASK1;
+            //  nothing except I can follow a V:
+            return C_MASK1 | L_MASK | V_MASK | X_MASK1;
+	// I/i
+	case 0x49:
+        case 0x69:
+	// L/l
+	case 0x4c:
+	case 0x6c:
+	    //  C and L cannot follow an I or L:
+	    return C_MASK1 | L_MASK;
 	default:
 	    /* do nothing, might add illegal char check for formality */
 	    break;
@@ -175,38 +202,65 @@ size_t set_flags(char ch)
 //  worked this out with pen and paper: trust me, it works. here be bitwise.
 size_t update_flags(size_t fl, char curr, char last, size_t iar)
 {
-    const char *WARNING = "INTERNAL ERROR: illegal Roman Numeral detected, aborting program. Report to dev.";
-
     switch (curr) {
 	// I/i
 	case 0x49:
         case 0x69:
 	    if (iar > 1 && iar < 3) {
-                return fl | V_MASK | X_MASK1;
-	    } else if (iar >= 3) {
+                return fl | X_MASK1 | V_MASK;
+	    }
+	    if (iar >= 3) {
                 return NO_MORE;
 	    }
-	    if (last == 0x58 || last == 0x78) { // X/x
+	    if (last == 0x58 || last == 0x78 ||   // X/x
+                    last == 0x4c || last == 0x6c || // L/l
+		    last == 0x43 || last == 0x63) { // C/c
                 return fl & X_MASK0;
 	    }
-	    break; 
+	    return C_MASK1 | L_MASK;
         // V/v
 	case 0x56:
         case 0x76:
 	    if (last == 0x49 || last == 0x69) { // I/i
                 return NO_MORE;
 	    }
-	    return fl | V_MASK | X_MASK1;
+	    return fl | C_MASK1 | L_MASK | X_MASK1 | V_MASK;
 	// X/x
 	case 0x58:
         case 0x78:
 	    if (last == 0x49 || last == 0x69) { // I/i
                 return NO_MORE;
 	    }
+	    if (last == 0x4c || last == 0x6c) {
+                return fl & C_MASK1 | L_MASK | X_MASK1;
+	    }
+	    if (iar > 1 && iar < 3) {
+                return fl & C_MASK1 | L_MASK;
+	    }
             if (iar >= 3) {
                 return fl | X_MASK1;
 	    }
-            break;
+	    if (last == 0x43 || last == 0x63) {  // C/c
+                return fl & C_MASK0;
+	    }
+            return C_MASK1;
+        // L/l
+	case 0x4c:
+	case 0x6c:
+            if (last == 0x58 || last == 0x78) { // X/x
+                return fl | C_MASK1 | L_MASK | X_MASK1;
+	    }
+	    return fl | C_MASK1 | L_MASK;
+        // C/c
+	case 0x43:
+        case 0x63:
+            if (last == 0x58 || last == 0x58) { // X/x
+                return fl | C_MASK1 | L_MASK | X_MASK1;
+	    }
+	    if (iar >= 3) {
+                return fl | C_MASK1;
+	    }
+	    break;
         default:
 	    std::cerr << WARNING << std::endl;
 	    return NO_MORE;
