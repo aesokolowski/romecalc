@@ -9,6 +9,7 @@ testconvs.exe
 rocal
 rocal.exe
 to1-399.txt
+co1-399.txt
 *.swp
 *.swo
 .git
