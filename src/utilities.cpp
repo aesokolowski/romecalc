@@ -231,9 +231,9 @@ size_t update_flags(size_t fl, char curr, char last, size_t iar)
 	    if (last == 0x49 || last == 0x69) { // I/i
                 return NO_MORE;
 	    }
-	    if (last == 0x4c || last == 0x6c) {
-                return fl & C_MASK1 | L_MASK | X_MASK1;
-	    }
+	    if (last == 0x4c || last == 0x6c) { // L/l
+                return fl & C_MASK1 | L_MASK;
+	    } 
 	    if (iar > 1 && iar < 3) {
                 return fl & C_MASK1 | L_MASK;
 	    }
