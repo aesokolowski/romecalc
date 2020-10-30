@@ -132,9 +132,9 @@ Style Notes:
 
    myVariable = *myPointer
 
-2. don't really see a reason to use std::string for this program. User input is represented as a vector of chars internally, no raw strings from arguments get strncpy'd or strncat'd. Also I'm more familiar with the <cstring> library than <string> since I've done more C lately than C++.
+2. don't really see a reason to use std::string for this program. User input is represented as a vector of chars internally, no raw strings from arguments get strncpy'd or strncat'd. Also I'm more familiar with the cstring and cctype libraries than string since I've done more C lately than C++.
 
-3. no throwing. design preference (for this particular program) of sequential calling of functions rather than calling functions from within functions to keep things "flat" favors avoiding exceptions. when I implement the "calculator" part I'll probably run into more exceptions (been lucky so far, but there's no exception for segfaults) but I want to catch immediately. For custom errors I just like to send a warning to stderr if the function doesn't return a string and overwrite the decimal or roman output with an error message if it does.
+3. no throwing. design preference (for this particular program) of sequential calling of functions rather than calling functions from within functions to keep things "flat" favors avoiding exceptions. when I implement the "calculator" part I'll probably run into more exceptions (been lucky so far, then again there's no exception for segfaults) but I want to catch immediately. For custom errors I just like to send a warning to stderr if the function doesn't return a string (I should probably throw in a few exits but I actually think they're generally in parts of the code that are unreachable except when called from tests) and overwrite the decimal or roman output with an error message if it does.
 
 4. old skool c++: I'm aware of new features like auto and non-standard features like itoa but I prefer not to use them, especially in a simple program like this. I find explicitly-typed variables make code easier to read, and I see no reason for itoa when I have sprintf and I see no reason for itos when I have stringstream.
 
