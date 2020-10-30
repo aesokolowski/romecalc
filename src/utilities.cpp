@@ -1,5 +1,6 @@
 #include "../include/UserNum.h"
 #include "../include/utilities.h"
+#include <cctype>
 #include <cstring>
 #include <iostream>
 #include <vector>
@@ -120,7 +121,7 @@ bool check_xvi(UserNum un)
             // don't bother with the rest if last char
 	    if (i < len - 1) {
                 // track how many
-	        if (current == last) in_a_row++;
+	        if (toupper(current) == toupper(last)) in_a_row++;
 	        else in_a_row = 1;
                 // update flags
 		flags = update_flags(flags, current, last, in_a_row);
