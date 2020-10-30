@@ -215,7 +215,7 @@ size_t update_flags(size_t fl, char curr, char last, size_t iar)
 	    if (last == 0x58 || last == 0x78 ||   // X/x
                     last == 0x4c || last == 0x6c || // L/l
 		    last == 0x43 || last == 0x63) { // C/c
-                return fl & X_MASK0;
+                return (fl & X_MASK0) | C_MASK1 | L_MASK;
 	    }
 	    return C_MASK1 | L_MASK;
         // V/v
