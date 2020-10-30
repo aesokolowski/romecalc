@@ -140,11 +140,11 @@ char *dec_to_rn(UserNum un)
 //
 //  As with dec_to_rn this function depends on previous passes through
 //  validators in order to work. As noted in other comments throughout the
-//  code, I chose to make multiple passes over given strings for modularity
+//  code, I chose to make multiple passes over given strings for modularity:w
 //  and because the strings aren't terribly long to begin with (not
 //  withstanding the crazy idea of adding custom Roman Numerals in order to
 //  use larger numbers, but for that I'd prefer a switch to enable "interactive
-//  mode" [read: menu/loop-based] instead of using command line arguments).
+//  mode" [read: menu/loop-based] instead of using command line arguments). 
 //
 //  So XXXIV -> 1. 10, 2. 20, 3. 30, 4. 29, 5. 34
 //  IX -> 1. -1 2. 9
@@ -181,7 +181,7 @@ char *rn_to_dec (UserNum un)
 		value = 10;
 		if (i < lc) {
                     char la = uv[i + 1]; // lookahead
-	            if (la == 0x4c || la == 0x6c || la == 0x43 || la == 0x62) {
+	            if (la == 0x4c || la == 0x6c || la == 0x43 || la == 0x63) {
                         value = -10;
 		    }
 		}
