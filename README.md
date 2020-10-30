@@ -14,7 +14,7 @@ rocal 4500 -> M?D
 
 rocal 9000 -> M!
 
-Roman numeral to Arabic decimal partially implemented. Parses I, V and X for now (1-39). Implementing L and C next, then D and M.
+Roman numeral to Arabic decimal partially implemented. Parses I, V, X, C and L for now (1-399). Implementing D and M next after doing a little more false-positive hunting for the current version.
 
 rocal i -> 1
 
@@ -28,13 +28,13 @@ targets:
 
 2. fix pipe / redirect issue
 
+(at this point I think I'm going to start on a webapp, catch up to this program in function [converter], and then develop the two in parallel [calculator])
+
 3. redesign base around optget-long (argument parser) and add help menu
 
 4. calculator functions
 
 5. multiple bases for Arabic numerals
-
-Thinking of creating a web app in parallel but have a few descisions to make before I start.
 
 -----------
 
@@ -99,6 +99,16 @@ bash scripts/nixtest.sh
 As for running the tests, same as Windows, just a forward slash instead of back slash after the dot.
 
 ----------
+
+run batch tests example (Powershell only for now):
+
+first run both the x64comp.ps1 and x64test.ps1 from project root, then run
+
+.\scripts\batch\random_input_1-399
+
+results can be viewed by opening rand1-399.txt that appears in project root
+
+-----------------
 
 Style Notes:
 
