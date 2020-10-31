@@ -50,7 +50,7 @@ NOTE1: If you only have CMD, you can probably just change the extension to .cmd,
 
 NOTE2: I do not believe Windows 10 or earlier comes with GCC, which g++ is a part of. I think I have at least two copies on my machine -- one came with the Haskell Platform and the other came with Cygwin. You don't need either of these things, just Google g++ or GCC (GNU Compiler Collection) and you should be able to snag a free copy. G++ is generally standard on Mac and *nix machines.
 
-NOTE3: x64comp is a dumb name considering this should run on 32-bit systems. Maybe I should change it.
+NOTE3: x64comp is a dumb name considering this should run on 32-bit systems. Actually the other way around. I think the compiled binary is 32-bit that runs on 64-bit systems. Maybe I should change it.
 
 NOTE4: if you actually want to use the program no matter what directory you are in, you should add a function that calls it to your profile script and alias said function as rocal or romecalc or whatever.
 
@@ -138,4 +138,4 @@ Style Notes:
 
 4. old skool c++: I'm aware of new features like auto and non-standard features like itoa but I prefer not to use them, especially in a simple program like this. I find explicitly-typed variables make code easier to read, and I see no reason for itoa when I have sprintf and I see no reason for itos when I have stringstream.
 
-5. tons o' hex: old skool C++ doesn't support binary literals so hex is an obvious choice for bitstring logic because it's so easy to mentally convert into binary. As for the ASCII, I find the hex numbers easier to remember than the decimal (i.e. just add 20 to get lowercase)
+5. tons o' hex: old skool C++ doesn't support binary literals so hex is an obvious choice for bitstring logic because it's so easy to mentally convert into binary. Lots of hardcoded ASCII because I don't expect the Romans to come back and change their ancient numbering system anytime soon.

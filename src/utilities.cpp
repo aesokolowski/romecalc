@@ -77,7 +77,7 @@ bool is_roman(UserNum un)
     return true;
 }
 
-/********  outdated comments but not deleting because it decribes original
+/********  outdated comment but not deleting because it decribes original
  *         thought process
 //  temp: 1 - 39
 //  temp to develop parser, only for X, V and I for now, may add one digit at
@@ -101,8 +101,7 @@ bool is_roman(UserNum un)
 //  reason I'm redoing my approach from scratch)
 //  *******/
 
-//  expanded logic to include l and c doesn't seem to require any changes in
-//  this function
+// this function didn't need any changes for expansion
 bool check_xvi(UserNum un)
 {
     char last;
@@ -138,6 +137,7 @@ bool check_xvi(UserNum un)
     return true;
 }
 
+// returns false if matching bit is set, true if not set
 bool is_current_valid(size_t fl, char ch) {
     switch (ch) {
 	// I/i
@@ -187,6 +187,7 @@ size_t set_flags(char ch)
 	// I/i
 	case 0x49:
         case 0x69:
+	          /** FALLTHROUGH **/
 	// L/l
 	case 0x4c:
 	case 0x6c:
@@ -200,7 +201,26 @@ size_t set_flags(char ch)
     return ZERO;
 }
 
-//  worked this out with pen and paper: trust me, it works. here be bitwise.
+//  updates flags from second character onward. This function assumes
+//  curr is already marked as valid (passed is_current_value) and assumes
+//  set_flags was used on the first character of the string. Simple example:
+//  if the current value is V then C, L, X and V are all marked as illegal
+//  for further characters. If the last character was an I, however, all characters
+//  are marked as illegal since nothing can follow IV.
+
+//  more complicated example:
+//  Let's say we're given XXXIXX (39 with an illegal extra X at the end)
+//  let's trace each character and resulting bitfield:
+//  X   -  00000   (a solitary X doesn't make anything in the current bit field
+//                 illegal)
+//  X   -  11000   (no more C's or L's)
+//  X   -  11100   (no more X's)
+//  I   -  11000   (I sees that X was last and unsets X, sets C and L if not
+//                  already set)
+//  X   -  11111   (all further characters made illegal when X follows an I)
+//  X   -  11111 & 00100 so return false (logic in is_current_valid function)
+//
+//  here be bitwise!
 size_t update_flags(size_t fl, char curr, char last, size_t iar)
 {
     switch (curr) {
